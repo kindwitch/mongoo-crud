@@ -1,4 +1,6 @@
+import { auth } from '@/auth'
 import EditTopicForm from '@/components/EditTopicForm'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const apiUrl = process.env.API_URL
@@ -21,6 +23,11 @@ export default async function EditTopic({
 }: {
   params: { id: string }
 }) {
+  const session = await auth()
+  if (!session) {
+    redirect('/login')
+  }
+
   const { id } = params
   const { topic } = await getTopicById(id)
   const { title, description } = topic

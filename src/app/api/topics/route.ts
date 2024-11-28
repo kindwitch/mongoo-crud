@@ -36,6 +36,7 @@ export async function GET() {
     )
   }
 }
+
 export async function DELETE(request: NextRequest) {
   try {
     const id = request.nextUrl.searchParams.get('id')

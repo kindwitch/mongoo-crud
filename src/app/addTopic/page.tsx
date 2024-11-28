@@ -1,11 +1,17 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { redirect, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 export default function AddTopicPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const router = useRouter()
+  const { data: session } = useSession()
+  if (!session) {
+    redirect('/login')
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!title || !description) {
